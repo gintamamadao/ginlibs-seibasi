@@ -1,0 +1,12 @@
+node_modules
+lib
+esm
+yarn-error.log
+dist
+es
+coverage
+package-lock.json
+.pnpm-debug.log
+node_modules
+bin
+lib
