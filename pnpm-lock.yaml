@@ -53,6 +53,7 @@ specifiers:
   tslib: ^2.0.0
   typescript: ^4.0.2
   v8flags: ^3.2.0
+  validate-npm-package-name: ^3.0.0
 
 dependencies:
   '@babel/parser': 7.14.7
@@ -71,6 +72,7 @@ dependencies:
   minimist: 1.2.5
   shelljs: 0.8.4
   v8flags: 3.2.0
+  validate-npm-package-name: 3.0.0
 
 devDependencies:
   '@babel/cli': 7.13.16_@babel+core@7.14.0
@@ -3549,7 +3551,6 @@ packages:
 
   /builtins/1.0.3:
     resolution: {integrity: sha1-y5T662HIaWRR2zZTThQi+U8K7og=}
-    dev: true
 
   /byline/5.0.0:
     resolution: {integrity: sha1-dBxSFkaOrcRXsDQQEYrXfejB3bE=}
@@ -9927,7 +9928,6 @@ packages:
     resolution: {integrity: sha1-X6kS2B630MdK/BQN5zF/DKffQ34=}
     dependencies:
       builtins: 1.0.3
-    dev: true
 
   /verror/1.10.0:
     resolution: {integrity: sha1-OhBcoXBTr1XW4nDB+CiGguGNpAA=}
