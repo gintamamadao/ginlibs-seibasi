@@ -45,10 +45,13 @@ const onPrepare = function (liftEnv) {
     } catch (e) {}
   }
 
-  const fn: any = delCache;
-
   cli.execute(liftEnv, () => {
-    return fn();
+    if (argv.d) {
+      delCache();
+    }
+    if (argv.a) {
+      getTsAst();
+    }
   });
 };
 

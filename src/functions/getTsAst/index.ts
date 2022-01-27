@@ -1,17 +1,24 @@
-import parser from '@babel/parser'
-import traverse from '@babel/traverse'
-import { LiftoffEnv } from 'liftoff'
-import fsUtil from 'ginlibs-file-util'
-import cache from 'ginlibs-cache'
-import { join } from 'path'
+import parser from "@babel/parser";
+import traverse from "@babel/traverse";
+import { LiftoffEnv } from "liftoff";
+import fsUtil from "ginlibs-file-util";
+import cache from "ginlibs-cache";
+import { join } from "path";
+import { sleep } from "ginlibs-utils";
 
-export const getTsAst = () => {
-  const liftEnv: LiftoffEnv = globalThis._cliLiftEnv || {}
-  const { cwd } = liftEnv
-  const code = fsUtil.read(join(cwd, 'index.ts'))
-  cache.write(code, 'code')
+export const getTsAst = async () => {
+  const liftEnv: LiftoffEnv = globalThis._cliLiftEnv || {};
+  const { cwd } = liftEnv;
+  const code = fsUtil.read("***");
+  console.log(code, "code");
   const ast = parser.parse(code, {
-    plugins: ['typescript'],
-  })
-  cache.write(ast, 'ast')
-}
+    plugins: ["typescript"],
+  });
+  console.log(ast, "ast");
+  traverse(ast, {
+    VariableDeclaration(path: any) {
+      console.log(path, "path");
+    },
+  });
+  await sleep(100000 * 1000);
+};
