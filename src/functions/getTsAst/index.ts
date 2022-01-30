@@ -9,7 +9,9 @@ import { sleep } from "ginlibs-utils";
 export const getTsAst = async () => {
   const liftEnv: LiftoffEnv = globalThis._cliLiftEnv || {};
   const { cwd } = liftEnv;
-  const code = fsUtil.read("***");
+  const code = fsUtil.read(
+    "/Users/madao/Documents/project/ginlibs-seibasi/src/functions/getTsAst/codeExample/index.ts"
+  );
   console.log(code, "code");
   const ast = parser.parse(code, {
     plugins: ["typescript"],
