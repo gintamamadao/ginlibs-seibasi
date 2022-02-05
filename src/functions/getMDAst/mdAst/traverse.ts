@@ -20,6 +20,7 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
   const type = node.type || "root";
   const children = node.children || [];
   const opts: any = options;
+  const travTypes = Object.keys(opts);
   let enter = noop;
   let exit = noop;
   if (isFunc(opts)) {
@@ -30,4 +31,12 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
   if (isFunc(opts.exit)) {
     exit = opts.exit;
   }
+
+  const checkNode = (node: any, options: Options | OptionsEE) => {
+    const type = node?.type || "root";
+    if (!node || !node.type || !travTypes.includes(type)) {
+      return;
+    }
+    const children = node.children || [];
+  };
 };
