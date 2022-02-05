@@ -1,9 +1,8 @@
-import parser from "@babel/parser";
-import traverse from "@babel/traverse";
 import { LiftoffEnv } from "liftoff";
 import fsUtil from "ginlibs-file-util";
 import { toAst } from "md-ast-traverse";
 import { sleep } from "ginlibs-utils";
+import { traverse } from "./mdAst";
 
 export const getMDAst = async () => {
   const liftEnv: LiftoffEnv = globalThis._cliLiftEnv || {};
@@ -14,5 +13,10 @@ export const getMDAst = async () => {
   console.log(code, "code");
   const ast = toAst(code);
   console.log(ast, "ast");
+  traverse(ast, {
+    ["*"]: (n) => {
+      console.log(n);
+    },
+  } as any);
   await sleep(100000 * 1000);
 };
