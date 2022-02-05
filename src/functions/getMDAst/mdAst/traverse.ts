@@ -24,19 +24,26 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
   const opts: any = options;
   const travTypes = Object.keys(opts);
 
-  const travNodes = (node: any) => {
+  const global = {
+    stop: false,
+  };
+  const info = {
+    pathStr: "",
+    parent: null,
+  };
+
+  const travNodes = (node: any, info: any) => {
     const children = node.children || [];
     for (const it of children) {
-      checkNode(it);
+      checkNode(it, info);
     }
   };
 
-  const checkNode = (node: any) => {
-    if (!node || !node.type) {
+  const checkNode = (node: any, info: any) => {
+    if (!node || !node.type || global.stop === true) {
       return;
     }
     const type = node?.type;
-    console.log(node, "dsaf");
     // if (!travTypes.includes(type)) {
     //   return travNodes(node);
     // }
@@ -51,11 +58,15 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
     if (isFunc(handleOpts && handleOpts.exit)) {
       exit = handleOpts.exit;
     }
+    const curInfo = {
+      ...info,
+      path: "",
+    };
     const nPath = new NodePath(node);
     enter(nPath);
-    travNodes(node);
+    travNodes(node, curInfo);
     exit(nPath);
   };
 
-  checkNode(node);
+  checkNode(node, info);
 };
