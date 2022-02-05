@@ -5,7 +5,7 @@ import Liftoff from "liftoff";
 import minimist from "minimist";
 import fsUtil from "ginlibs-file-util";
 import { resolve } from "path";
-import { getTsAst, delCache } from "../index";
+import { getTsAst, getMDAst, delCache } from "../index";
 
 const processArgv = process.argv.slice(2);
 const argv = minimist(processArgv);
@@ -50,7 +50,8 @@ const onPrepare = function (liftEnv) {
       delCache();
     }
     if (argv.a) {
-      getTsAst();
+      // getTsAst();
+      getMDAst();
     }
   });
 };
