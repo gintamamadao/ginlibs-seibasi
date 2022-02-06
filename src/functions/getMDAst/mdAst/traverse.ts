@@ -43,22 +43,21 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
       if (!it) {
         continue;
       }
-      const curInfo = {
-        ...info,
-        path: `${info?.path || ""}.children[${i}]`,
-      };
-      checkNode(it, curInfo);
+      const itPath = `${info?.path || ""}.children[${i}]`;
+      checkNode(it, info, itPath);
     }
   };
 
-  const checkNode = (node: any, info: any) => {
+  const checkNode = (node: any, info: any, pathStr?: string) => {
     if (!node || !node.type || global.stop === true) {
       return;
     }
     const type = node?.type;
+    const nodePathStr =
+      pathStr || `${info.path ? info.path + "." + type : type || ""}`;
     const curInfo = {
       ...info,
-      path: `${info?.path || ""}${type ? "." + type : ""}`,
+      path: nodePathStr,
     };
 
     if (!travTypes.includes(type)) {
