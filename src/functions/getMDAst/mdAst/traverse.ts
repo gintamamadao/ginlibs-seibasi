@@ -13,8 +13,6 @@ export type OptionsEE = {
   };
 };
 
-type AnyFunction = (...args: any[]) => any;
-
 const noop: AnyFunction = () => undefined;
 
 export const traverse = (node: any, options: Options | OptionsEE) => {
@@ -45,6 +43,7 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
       }
       const itPath = `${info?.path || ""}.children[${i}]`;
       const travInfo = {
+        index: i,
         parent: node,
         parentPath: info?.path || "",
         path: itPath,
