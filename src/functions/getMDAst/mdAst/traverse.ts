@@ -27,7 +27,7 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
   const global = {
     stop: false,
   };
-  const info = {
+  const info: any = {
     pathStr: "",
     parent: null,
   };
@@ -44,19 +44,27 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
         continue;
       }
       const itPath = `${info?.path || ""}.children[${i}]`;
-      checkNode(it, info, itPath);
+      const travInfo = {
+        parent: node,
+        parentPath: info?.path || "",
+        path: itPath,
+        curList: children,
+      };
+      checkNode(it, info, travInfo);
     }
   };
 
-  const checkNode = (node: any, info: any, pathStr?: string) => {
+  const checkNode = (node: any, info: any, travInfo: any = {}) => {
     if (!node || !node.type || global.stop === true) {
       return;
     }
     const type = node?.type;
     const nodePathStr =
-      pathStr || `${info.path ? info.path + "." + type : type || ""}`;
+      travInfo.path || `${info.path ? info.path + "." + type : type || ""}`;
     const curInfo = {
       ...info,
+      ...travInfo,
+      type,
       path: nodePathStr,
     };
 
