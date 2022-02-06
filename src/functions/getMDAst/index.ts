@@ -14,7 +14,7 @@ export const getMDAst = async () => {
   const ast = toAst(code);
   console.log(ast, "ast");
   traverse(ast, {
-    ["*"]: (n) => {
+    text: (n) => {
       console.log(n);
     },
   } as any);

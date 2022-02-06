@@ -1,5 +1,5 @@
 import { NodeType } from "./types";
-import { isFunc, isObject } from "ginlibs-type-check";
+import { isFunc, isObject, isArray } from "ginlibs-type-check";
 import { NodePath } from "./nodePath";
 
 export type Options = {
@@ -33,9 +33,21 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
   };
 
   const travNodes = (node: any, info: any) => {
-    const children = node.children || [];
-    for (const it of children) {
-      checkNode(it, info);
+    const children: any[] = node.children || [];
+    if (!isArray(children) || children.length <= 0) {
+      return;
+    }
+    for (let i = 0; i < children.length; i++) {
+      const it = children[i];
+
+      if (!it) {
+        continue;
+      }
+      const curInfo = {
+        ...info,
+        path: `${info?.path || ""}.children[${i}]`,
+      };
+      checkNode(it, curInfo);
     }
   };
 
@@ -44,9 +56,14 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
       return;
     }
     const type = node?.type;
-    // if (!travTypes.includes(type)) {
-    //   return travNodes(node);
-    // }
+    const curInfo = {
+      ...info,
+      path: `${info?.path || ""}${type ? "." + type : ""}`,
+    };
+
+    if (!travTypes.includes(type)) {
+      return travNodes(node, curInfo);
+    }
     const handleOpts = opts[type];
     let enter = noop;
     let exit = noop;
@@ -58,11 +75,7 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
     if (isFunc(handleOpts && handleOpts.exit)) {
       exit = handleOpts.exit;
     }
-    const curInfo = {
-      ...info,
-      path: "",
-    };
-    const nPath = new NodePath(node, global);
+    const nPath = new NodePath(node, curInfo, global);
     enter(nPath);
     travNodes(node, curInfo);
     exit(nPath);
