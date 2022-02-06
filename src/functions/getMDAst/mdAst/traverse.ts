@@ -62,7 +62,7 @@ export const traverse = (node: any, options: Options | OptionsEE) => {
       ...info,
       path: "",
     };
-    const nPath = new NodePath(node);
+    const nPath = new NodePath(node, global);
     enter(nPath);
     travNodes(node, curInfo);
     exit(nPath);
